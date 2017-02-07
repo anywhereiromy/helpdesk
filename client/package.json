@@ -8,8 +8,9 @@
     "start": "node help.js"
   },
   "bin": {
-    "nchelp": "bin/help.js"
+    "nchelp": "bin/index.js"
   },
+  "preferGlobal": "true",
   "author": "",
   "license": "ISC",
   "dependencies": {

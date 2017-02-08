@@ -42,10 +42,13 @@ function collectQuestionData (data, callback) {
     }
   ];
   inquirer.prompt(questions).then(function (answers) {
-    // console.log(answers);
     data.info = answers;
     callback(null, answers);
   });
 }
+
+collectQuestionData({}, function (err, answers) {
+  console.log(err, answers);
+});
 
 module.exports = collectQuestionData;

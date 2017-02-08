@@ -1,6 +1,4 @@
-const inquirer = require('inquirer');
-
-function collectQuestionData (data, callback) {
+function collectQuestionData (inquirer, data, callback) {
   const selections = [{name: 'No'}, {name: 'Yes'}];
   const questions = [
     {
@@ -41,14 +39,20 @@ function collectQuestionData (data, callback) {
       choices: selections
     }
   ];
-  inquirer.prompt(questions).then(function (answers) {
-    data.info = answers;
-    callback(null, answers);
-  });
+  inquirer.prompt(questions)
+    .then(function (answers) {
+      data.info = answers;
+      callback(null, answers);
+    })
+    .catch(function (err) {
+      if (err) {
+        return callback('Something went wrong with the questionaire :(');
+      }
+    });
 }
 
-collectQuestionData({}, function (err, answers) {
-  console.log(err, answers);
-});
+function collectQuestionDataFactory (inquirer) {
+  return collectQuestionData.bind(null, inquirer);
+}
 
-module.exports = collectQuestionData;
+module.exports = collectQuestionDataFactory;

@@ -1,64 +1,68 @@
 /* eslint-env mocha */
 const expect = require('chai').expect;
-const createTrelloCardFactory = require('../../lib/createTrelloCard');
+const collectQuestionDataFactory = require('../../lib/collectQuestionData');
 
-describe('createTrelloCardFactory()', () => {
+describe('collectQuestionData()', () => {
   it('is a function', () => {
-    expect(createTrelloCardFactory).to.be.a('function');
+    expect(collectQuestionDataFactory).to.be.a('function');
   });
 
-  it('expects 2 arguments', () => {
-    expect(createTrelloCardFactory.length).to.equal(2);
+  it('expects 1 argument', () => {
+    expect(collectQuestionDataFactory.length).to.equal(1);
   });
 
-  describe('createTrelloCardFactory() result', () => {
-    it('calls the axios argument passed to factory with data and url arguments', (done) => {
-      const fakeUrl = 'www.test.com';
-      const fakeData = {foo: 'bar'};
-      const axios = {
-        post: function (url, data) {
-          expect(url).to.equal(fakeUrl);
-          expect(data).to.equal(fakeData);
-          done();
+  describe('collectQuestionDataFactory() result', () => {
+    it('adds return value from inquirer.prompt to data.info if inquirer.prompt resolves', (done) => {
+      const fakeData = {};
+      const fakeInquirer = {
+        prompt: function () {
+          return Promise.resolve('fakeData');
         }
       };
+      const collectQuestionData = collectQuestionDataFactory(fakeInquirer);
 
-      const createTrelloCard = createTrelloCardFactory(axios, fakeUrl);
-      createTrelloCard(fakeData, () => 'test');
+      function testFn () {
+        expect(fakeData).to.eql({info: 'fakeData'});
+        done();
+      }
+
+      collectQuestionData(fakeData, testFn);
     });
 
-    it('calls callback with response if axios post request is resolved', (done) => {
-      const fakeUrl = 'www.test.com';
-      const fakeData = {foo: 'bar'};
-      const axios = {
-        post: function (url, data) {
-          return Promise.resolve('worked');
+    it('calls callback with return value of inquirer.prompt when it resolves', (done) => {
+      const fakeData = {};
+      const fakeInquirer = {
+        prompt: function () {
+          return Promise.resolve('fakeData');
         }
       };
+      const collectQuestionData = collectQuestionDataFactory(fakeInquirer);
 
-      const createTrelloCard = createTrelloCardFactory(axios, fakeUrl);
-      createTrelloCard(fakeData, (err, response) => {
+      function testFn (err, res) {
         expect(err).to.equal(null);
-        expect(response).to.equal('worked');
+        expect(res).to.eql('fakeData');
         done();
-      });
+      }
+
+      collectQuestionData(fakeData, testFn);
     });
 
-    it('calls callback with error if axios post request is rejected', (done) => {
-      const fakeUrl = 'www.test.com';
-      const fakeData = {foo: 'bar'};
-      const axios = {
-        post: function (url, data) {
-          return Promise.reject(new Error('failed'));
+    it('calls callback with err message if inquirer.prompt rejects', (done) => {
+      const fakeData = {};
+      const fakeInquirer = {
+        prompt: function () {
+          return Promise.reject('fakeData');
         }
       };
+      const collectQuestionData = collectQuestionDataFactory(fakeInquirer);
 
-      const createTrelloCard = createTrelloCardFactory(axios, fakeUrl);
-      createTrelloCard(fakeData, (err, response) => {
-        expect(err).to.equal('Whoops... Somthing went wrong! :O');
-        expect(response).to.equal(undefined);
+      function testFn (err, res) {
+        expect(err).to.equal('Something went wrong with the questionaire :(');
+        expect(res).to.equal(undefined);
         done();
-      });
+      }
+
+      collectQuestionData(fakeData, testFn);
     });
   });
 });

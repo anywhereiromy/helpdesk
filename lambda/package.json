@@ -1,8 +1,8 @@
 {
-  "name": "helpdesk-server",
+  "name": "updateTrelloLambda",
   "version": "1.0.0",
   "description": "Server for Northcoders helpdesk requests",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,8 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "async": "^2.1.4",
-    "body-parser": "^1.15.2",
-    "express": "^4.14.0",
     "node-slack": "0.0.7",
     "trello": "^0.7.0"
   }

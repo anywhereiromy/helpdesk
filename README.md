@@ -10,7 +10,7 @@ NC HELPDESK is a command line tool designed to manage our ability to provide ass
 1. In the command line type: 
 
 ```
-npm install git+https://isaacs@github.com/npm/npm.git
+npm install -g git+https://github.com/northcoders/helpdesk.git
 ```
 
 2. Whenever you have a problem in your terminal type ```nchelp```. This will launch the `nchelpdesk` which has a few questions to help prompt your problem solving thinking.

@@ -24,7 +24,7 @@ function generateQuery () {
     }
     createTrelloCard(data, function (err, response) {
       if (err) {
-        return console.log(err.message);
+        return console.log(err);
       }
       return console.log(response.data);
     });

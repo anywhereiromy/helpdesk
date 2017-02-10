@@ -7,9 +7,7 @@ NC HELPDESK is a command line tool that you can npm install. It's designed to ma
 
 ----
 ## How to use?
-1. Git clone repo url
-2. In the root directory, npm install -g .
-3. cd ..
-4. delete the repo you git cloned
+1. In the command line type npm install ```git+https://isaacs@github.com/npm/npm.git```
 
-Then whenever you have a problem, all you need to do is type ```nchelp``` into your command line and answer the relative questions. We have tried to keep the questions quick and simple and, as always, your feedback is always appreciated.
+2. Whenever you have a problem in your terminal type ```nchelp```. This will launch the nchelpdesk which has a few questions to help prompt your problem solving thinking.
+We have tried to keep the questions quick and simple and, as always, your feedback is always appreciated.

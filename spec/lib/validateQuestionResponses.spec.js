@@ -55,7 +55,7 @@ describe('validateQuestionResponses', () => {
 
     const errMessage1 = `1. ${'You should really try and spend ten minutes solving problems by yourself. It\'s a great way to learn!'.red}\n`;
 
-    const errMessage2 = `2. ${'You will probably find that most people would have had a similar problem. Give our friend google a try!'.red}\n 3. ${'OK. To make sure we can see everyone who needs help, please get everything you need together and try again when your ready :)'.red}\n`;
+    const errMessage2 = `2. ${'You will probably find that most people would have had a similar problem. Give Google a try!'.red}\n3. ${'OK. To make sure we can see everyone who needs help, please get everything you need together and try again when you are ready :)'.red}\n`;
 
     validateQuestionResponses(fakeData1, (err, res) => {
       expect(err.message).to.equal(errMessage1);

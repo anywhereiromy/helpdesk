@@ -32,21 +32,21 @@ describe('createTrelloCardFactory()', () => {
       const fakeData = {foo: 'bar'};
       const axios = {
         post: function (url, data) {
-          return Promise.resolve('worked');
+          return Promise.resolve({data: 'worked'});
         }
       };
 
       const createTrelloCard = createTrelloCardFactory(axios, fakeUrl);
       createTrelloCard(fakeData, (err, response) => {
         expect(err).to.equal(null);
-        expect(response).to.equal('worked');
+        expect(response).to.eql({data: 'worked'});
         done();
       });
     });
 
     it('calls callback with error if axios post request is rejected', (done) => {
       const fakeUrl = 'www.test.com';
-      const fakeData = {foo: 'bar'};
+      const fakeData = {data: 'bar'};
       const axios = {
         post: function (url, data) {
           return Promise.reject(new Error('failed'));
@@ -55,7 +55,7 @@ describe('createTrelloCardFactory()', () => {
 
       const createTrelloCard = createTrelloCardFactory(axios, fakeUrl);
       createTrelloCard(fakeData, (err, response) => {
-        expect(err).to.equal('Whoops... Somthing went wrong! :O');
+        expect(err).to.equal('NC Helpdesk is experiencing some problems. If you can put your hand up, we will be over as soon as possible');
         expect(response).to.equal(undefined);
         done();
       });

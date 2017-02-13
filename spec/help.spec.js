@@ -50,12 +50,12 @@ describe('generateQuery()', () => {
   it('should console.log correct error message if createTrelloCard calls callback with error', (done) => {
     const async = generateQuery.__get__('async');
     async.waterfall = function (fns, final) {
-      final(null, 'test');
+      final({message: 'Fail'});
     };
     const revert = generateQuery.__set__({
       console: {
         log: function (chars) {
-          expect(chars).to.equal('Whoops... Somthing went wrong! :O');
+          expect(chars).to.equal('Fail');
           revert();
           done();
         }

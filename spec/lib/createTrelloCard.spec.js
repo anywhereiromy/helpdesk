@@ -13,17 +13,24 @@ describe('createTrelloCardFactory()', () => {
 
   describe('createTrelloCardFactory() result', () => {
     it('calls the axios argument passed to factory with data and url arguments', (done) => {
-      const fakeUrl = 'www.test.com';
+      const fakeConfig = {
+        url: 'www.test.com',
+        meta: {
+          x: 'foo'
+        }
+      };
+
       const fakeData = {foo: 'bar'};
       const axios = {
-        post: function (url, data) {
-          expect(url).to.equal(fakeUrl);
+        post: function (url, data, meta) {
+          expect(url).to.equal(fakeConfig.url);
           expect(data).to.equal(fakeData);
+          expect(meta).to.equal(fakeConfig.meta);
           done();
         }
       };
 
-      const createTrelloCard = createTrelloCardFactory(axios, fakeUrl);
+      const createTrelloCard = createTrelloCardFactory(axios, fakeConfig);
       createTrelloCard(fakeData, () => 'test');
     });
 
